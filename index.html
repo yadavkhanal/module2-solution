@@ -24,43 +24,42 @@ button>span {
 	color: green;
 }
 </style>
-<script src="angular.min.js"></script>
-<script src="app.js"></script>
+
 </head>
-<body>
+<body ng-app="ShoppingList">
 	<div class="container">
 		<h1>Shopping List Check Off</h1>
 
 		<div class="row">
 
 			<!-- To Buy List -->
-			<div class="col-md-6">
+			<div class="col-md-6" ng-controller="ToBuyController as vm">
 				<h2>To Buy:</h2>
 				<ul>
-					<li>Buy 10 cookies
-						<button class="btn btn-default">
-							<span class="glyphicon glyphicon-ok"></span> Bought
-						</button>
-					</li>
-					<li>Buy 10 cookies
-						<button class="btn btn-default">
+					<li ng-repeat="item in vm.getToBuyItems">Buy {{item.qty}}
+						{{item.text}}
+						<button class="btn btn-default" ng-click="vm.buy($index)">
 							<span class="glyphicon glyphicon-ok"></span> Bought
 						</button>
 					</li>
 				</ul>
-				<div class="emptyMessage">Everything is bought!</div>
+				<div class="emptyMessage" ng-if="vm.getToBuyItems.length == 0">Everything
+					is bought!</div>
 			</div>
 
 			<!-- Already Bought List -->
-			<div class="col-md-6">
+			<div class="col-md-6" ng-controller="BoughtController as vm">
 				<h2>Already Bought:</h2>
 				<ul>
-					<li>Bought 10 cookies</li>
+					<li ng-repeat="item in vm.getBoughtItems">Bought {{item.qty}}
+						{{item.text}}</li>
 				</ul>
-				<div class="emptyMessage">Nothing bought yet.</div>
+				<div class="emptyMessage" ng-if="vm.getBoughtItems.length == 0">Nothing
+					bought yet.</div>
 			</div>
 		</div>
 	</div>
-
+	<script src="angular.min.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
